@@ -2,15 +2,15 @@ extern crate sdl2;
 
 mod input_system;
 mod button;
+mod mouse;
 
 pub use input_system::InputSystem;
+pub use mouse::MouseButton;
 
 use crate::render::SdlWrapper;
 use crate::game::Application;
 
 use sdl2::event::Event;
-
-
 
 pub fn get_user_input(input: &mut InputSystem, sdl: &mut SdlWrapper, app: &mut Application) {
 	input.update();
@@ -29,6 +29,24 @@ pub fn get_user_input(input: &mut InputSystem, sdl: &mut SdlWrapper, app: &mut A
 				if repeat { continue; }
 				if let Some(keycode) = keycode {
 					input.release_key(keycode);
+				}
+			}
+			Event::MouseMotion {x,y, ..} => {
+				input.mouse.x = x;
+				input.mouse.y = y;
+			}
+			Event::MouseButtonDown {mouse_btn, ..} => {
+				if let Some(button) = mouse::MouseButton::from_sdl2(mouse_btn) {
+					input.mouse.press(button);
+				} else {
+					println!("WARNING: Unknown button pressed");
+				}
+			}
+			Event::MouseButtonUp {mouse_btn, ..} => {
+				if let Some(button) = mouse::MouseButton::from_sdl2(mouse_btn) {
+					input.mouse.release(button);
+				} else {
+					println!("WARNING: Unknown button released");
 				}
 			}
 			_ => {}

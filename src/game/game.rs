@@ -6,7 +6,7 @@ pub struct Game {
 impl Game {
 	pub fn new() -> Self {
 		Self {
-			frame: 0
+			frame: 0,
 		}
 	}
 }

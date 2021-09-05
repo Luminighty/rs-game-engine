@@ -1,6 +1,10 @@
 extern crate sdl2;
 
+
+use sdl2::{render::TextureCreator, video::WindowContext};
+
 use crate::config;
+
 
 pub struct SdlWrapper {
 	pub canvas: sdl2::render::Canvas<sdl2::video::Window>,
@@ -26,4 +30,9 @@ impl SdlWrapper {
 			canvas, events
 		}
 	}
+
+	pub fn texture_creator(&self) -> TextureCreator<WindowContext> {
+		self.canvas.texture_creator()
+	}
+
 }
