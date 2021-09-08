@@ -33,6 +33,15 @@ impl Rect {
 		}
 	}
 
+	pub fn scalar(self, mul: i32) -> Self {
+		Self {
+			x: self.x * mul,
+			y: self.y * mul,
+			width: self.width * mul as u32,
+			height: self.width * mul as u32,
+		}
+	}
+
 	pub fn center(&self) -> utils::Vector2 {
 		utils::Vector2::new(
 			self.x + (self.width / 2) as i32,

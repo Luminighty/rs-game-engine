@@ -20,7 +20,7 @@ fn main() {
 	loop {
 		input::get_user_input(&mut input, &mut sdlwrapper, &mut app);
 		update::update(&mut app, &mut game, &input);
-		render::render(&mut sdlwrapper, &texture_creator, &mut textures,  &game, &input);
+		render::render(&mut sdlwrapper, &texture_creator, &mut textures,  &game, &app, &input);
 		if !app.is_running {
 			break;
 		}

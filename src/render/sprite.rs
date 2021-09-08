@@ -1,25 +1,52 @@
 extern crate sdl2;
 
-use crate::utils::{self, Vector2};
+use crate::utils::{self, Rect, Vector2};
 
 #[derive(Clone, Copy, PartialEq)]
 pub enum Sprite {
-	Player
-
+	Player,
+	Undead,
+	Ground,
+	Wall,
+	Interact,
 }
 
 pub struct Sprites {
-
+	player: SpriteData,
+	undead: SpriteData,
+	ground: SpriteData,
+	wall: SpriteData,
+	interact: SpriteData,
 }
 
 impl Sprites {
 	pub fn init() -> Self {
 		Self {
+			player:   SpriteData::sheet("res/actor/player.png", Rect::new().size(16, 16), Vector2::zero()),
+			undead:   SpriteData::sheet("res/actor/undead.png", Rect::new().size(16, 16), Vector2::zero()),
+			ground:   SpriteData::sheet("res/map/ground.png", Rect::new().size(16, 16), Vector2::zero()),
+			wall:     SpriteData::sheet("res/map/wall.png", Rect::new().size(16, 16), Vector2::zero()),
+			interact: SpriteData::sheet("res/ui/interact.png", Rect::new().size(16, 16), Vector2::zero()),
 		}
 	}
 
-	pub fn fields(&mut self) -> Vec<&mut SpriteData> {
+	pub fn fields_mut(&mut self) -> Vec<&mut SpriteData> {
 		vec![
+			&mut self.player, 
+			&mut self.undead,
+			&mut self.ground, 
+			&mut self.wall,
+			&mut self.interact,
+		]
+	}
+
+	pub fn fields(&self) -> Vec<&SpriteData> {
+		vec![
+			&self.player, 
+			&self.undead,
+			&self.ground, 
+			&self.wall,
+			&self.interact,
 		]
 	}
 }
@@ -46,11 +73,11 @@ impl SpriteData {
 		}
 	}
 
-	pub fn get_rect(&self, x: i32, y: i32) -> utils::Rect {
+	pub fn get_rect(&self, x: u8, y: u8) -> utils::Rect {
 		if let Some(padding) = self.padding {
 			self.rect.clone()
-			.offset(self.rect.x + (padding.x + self.rect.width as i32) * x, 
-					self.rect.y + (padding.y + self.rect.height as i32) * y)
+			.offset(self.rect.x + (padding.x + self.rect.width as i32) * x as i32, 
+					self.rect.y + (padding.y + self.rect.height as i32) * y as i32)
 		} else {
 			self.rect.clone()
 		}
