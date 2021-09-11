@@ -32,8 +32,8 @@ pub fn get_user_input(input: &mut InputSystem, sdl: &mut SdlWrapper, app: &mut A
 				}
 			}
 			Event::MouseMotion {x,y, ..} => {
-				input.mouse.x = x;
-				input.mouse.y = y;
+				input.mouse.x = x / app.upscale as i32;
+				input.mouse.y = y / app.upscale as i32;
 			}
 			Event::MouseButtonDown {mouse_btn, ..} => {
 				if let Some(button) = mouse::MouseButton::from_sdl2(mouse_btn) {
