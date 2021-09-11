@@ -21,12 +21,13 @@ pub struct Sprites {
 
 impl Sprites {
 	pub fn init() -> Self {
+		let actor_rect = Rect::new().size(16, 16);
 		Self {
-			player:   SpriteData::sheet("res/actor/player.png", Rect::new().size(16, 16), Vector2::zero()),
-			undead:   SpriteData::sheet("res/actor/undead.png", Rect::new().size(16, 16), Vector2::zero()),
-			ground:   SpriteData::sheet("res/map/ground.png", Rect::new().size(16, 16), Vector2::zero()),
-			wall:     SpriteData::sheet("res/map/wall.png", Rect::new().size(16, 16), Vector2::zero()),
-			interact: SpriteData::sheet("res/ui/interact.png", Rect::new().size(16, 16), Vector2::zero()),
+			player:   SpriteData::sheet("res/actor/player.png", actor_rect),
+			undead:   SpriteData::sheet("res/actor/undead.png", actor_rect),
+			ground:   SpriteData::sheet("res/map/ground.png",   actor_rect),
+			wall:     SpriteData::sheet("res/map/wall.png",     actor_rect),
+			interact: SpriteData::sheet("res/ui/interact.png",  actor_rect),
 		}
 	}
 
@@ -66,11 +67,17 @@ impl SpriteData {
 		}
 	}
 
-	pub fn sheet(path: &str, rect: utils::Rect, padding: Vector2) -> Self {
+	pub fn sheet(path: &str, rect: utils::Rect) -> Self {
 		Self {
 			path: String::from(path),
-			rect, padding: Some(padding)
+			rect, 
+			padding: Some(Vector2::zero())
 		}
+	}
+
+	pub fn padding(mut self, padding: Vector2) -> Self {
+		self.padding = Some(padding);
+		self
 	}
 
 	pub fn get_rect(&self, x: u8, y: u8) -> utils::Rect {
@@ -95,7 +102,7 @@ mod test {
 	pub fn get_rect() {
 		let rect = utils::Rect::new().size(10, 10).offset(1, 1);
 		let sprite = SpriteData::sprite("", rect.clone());
-		let sprite_sheet = SpriteData::sheet("", rect.clone(), utils::Vector2::new(5, 5));
+		let sprite_sheet = SpriteData::sheet("", rect).padding(utils::Vector2::new(5, 5));
 		assert_eq!(rect, sprite.get_rect(2, 2));
 		assert_eq!(rect, sprite_sheet.get_rect(0, 0));
 		assert_eq!(utils::Rect::new().size(10, 10).offset(31, 1), sprite_sheet.get_rect(2, 0));

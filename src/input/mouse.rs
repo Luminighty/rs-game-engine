@@ -1,6 +1,6 @@
 extern crate sdl2;
 
-use crate::input::button::{ButtonState};
+use crate::{input::button::{ButtonState}, utils};
 
 const MOUSE_BUTTON_COUNT: usize = 5;
 
@@ -46,6 +46,10 @@ impl Mouse {
 
 	pub fn step(&mut self) {
 		self.buttons = self.buttons.iter_mut().map(|btn| btn.step()).collect();
+	}
+
+	pub fn position(&self) -> utils::Vector2 {
+		utils::Vector2::new(self.x, self.y)
 	}
 }
 
