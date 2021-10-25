@@ -1,32 +1,21 @@
-use crate::utils::Vector2;
+use crate::utils::{Vector2, clamp::Clamped};
+
+pub mod kind;
+
+use kind::Kind;
 
 pub struct Enemy {
 	pub position: Vector2,
+	pub offset: Vector2,
 	pub kind: Kind,
+	pub hp: Clamped<u32>,
 }
 
-pub enum Kind {
-	Bat,
-	Ghost,
-	Wisp,
-	Zombie
-}
-
-impl Kind {
-	pub fn offset(&self) -> u8 {
-		match self {
-			&Kind::Bat => 0,
-			&Kind::Ghost => 1,
-			&Kind::Wisp => 2,
-			&Kind::Zombie => 3,
-		}
-	} 
-}
 
 impl Enemy {
 
 	pub fn new(position: Vector2, kind: Kind) -> Self {
-		Self { position, kind }
+		Self { position, offset: Vector2::zero(), kind, hp: kind.hp() }
 	}
 
 	pub fn bat(position: Vector2) -> Self {

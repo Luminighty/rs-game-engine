@@ -1,0 +1,7 @@
+{
+	"files.exclude": {
+		"**/.vscode": true,
+		"**/target": true,
+		"Cargo.lock": true
+	}
+}

@@ -6,6 +6,7 @@ mod mouse;
 
 pub use input_system::InputSystem;
 pub use mouse::MouseButton;
+pub use button::ButtonState;
 
 use crate::render::SdlWrapper;
 use crate::game::Application;
