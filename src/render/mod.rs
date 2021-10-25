@@ -17,6 +17,7 @@ use sdl2::pixels::Color;
 
 mod actors;
 mod map;
+mod renderable;
 
 pub fn render<'r>(
     sdl: &mut SdlWrapper,
@@ -35,10 +36,19 @@ pub fn render<'r>(
     sdl.canvas.present();
 }
 
+pub const DEFAULT_UNIT: u32 = 16;
+
+pub fn unit_tile_rect(x: i32, y: i32, upscale: u32) -> Rect {
+    tile_rect(x, y, DEFAULT_UNIT, DEFAULT_UNIT, upscale)
+}
 
 pub fn tile_rect(x: i32, y: i32, width: u32, height: u32, upscale: u32) -> Rect {
+    tile_rect_offset(x, y, 0, 0, width, height, upscale)
+}
+
+pub fn tile_rect_offset(x: i32, y: i32, offset_x: i32, offset_y: i32, width: u32, height: u32, upscale: u32) -> Rect {
 	Rect::new()
-		.offset(x * width as i32, y * height as i32)
+		.offset(x * width as i32 + offset_x, y * height as i32 + offset_y)
 		.size(width, height)
 		.scalar(upscale as i32)
 }

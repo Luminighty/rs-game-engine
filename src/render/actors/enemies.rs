@@ -1,6 +1,6 @@
 use sdl2::{render::TextureCreator, video::WindowContext};
-use crate::{game, render::Sprite};
-use super::{SdlWrapper, TextureMap, tile_rect};
+use crate::{game::{self, actor::Enemy}, render::{Sprite, renderable::{RenderSprite, Renderable}}};
+use super::{SdlWrapper, TextureMap};
 
 pub fn render_enemies<'r>(
     sdl: &mut SdlWrapper,
@@ -10,14 +10,13 @@ pub fn render_enemies<'r>(
 	app: &game::Application,
 ) {
 	for enemy in &game.enemies {
-
-		let position = &enemy.position;
-		let frame = (app.frame / game.animation_step % 2) as u8;
-		let (texture, rect) = textures.get_sheet(Sprite::Undead, frame, enemy.kind.offset(), texture_creator);
-		let dst = tile_rect(position.x, position.y, rect.width, rect.height, app.upscale);
-
-		sdl.canvas.copy_ex(texture, rect, dst, 0.0, None, false, false).unwrap();
-
+		let enemy = RenderSprite::from(enemy);
+		enemy.render(sdl, texture_creator, textures, app);
 	}
+}
 
+impl From<&Enemy> for RenderSprite {
+	fn from(enemy: &Enemy) -> Self {
+		RenderSprite::new(enemy.position, enemy.offset, Sprite::Player)
+	}
 }

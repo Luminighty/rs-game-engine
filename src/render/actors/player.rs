@@ -1,5 +1,5 @@
 use sdl2::{pixels::Color, render::TextureCreator, video::WindowContext};
-use crate::{game::{self, actor::MouseState}, render::Sprite};
+use crate::{game::{self, actor::{MouseState, Player}}, render::{Sprite, renderable::RenderSprite, renderable::{RenderRect, Renderable}}};
 use super::{SdlWrapper, TextureMap, tile_rect};
 
 pub fn render_player<'r>(
@@ -9,18 +9,47 @@ pub fn render_player<'r>(
     game: &game::Game,
 	app: &game::Application,
 ) {
-	let position = &game.player.position;
 	let frame = (app.frame / (game.animation_step / 2) % 4) as u8;
-	let (texture, rect) = textures.get_sheet(Sprite::Player, frame, 0, texture_creator);
-	let dst = tile_rect(position.x, position.y, rect.width, rect.height, app.upscale);
 
-	if game.player.mouse_state == MouseState::Hover {
-		sdl.canvas.set_draw_color(Color::RGB(50, 200, 100));
-		sdl.canvas.draw_rect(dst.into()).unwrap();
-		for i in 1..app.upscale {
-			sdl.canvas.draw_rect(dst.shrink(i as i32).into()).unwrap();
+	let player = RenderSprite::from(&game.player)
+										.sheet((frame as i32, 0));
+	player.render(sdl, texture_creator, textures, app);
+
+	let pos = &game.player.position;
+	let outline = outline_color(&game.player.mouse_state);
+	let outline = outline.map(|c| RenderRect::new(*pos, c));
+	outline.map(|o| o.render(sdl, texture_creator, textures, app));
+
+	//render_path(sdl, texture_creator, textures, game, app);
+}
+
+fn outline_color(state: &MouseState) -> Option<Color> {
+	match state {
+		&MouseState::Hover => Some(Color::RGB(50, 200, 100)),
+		&MouseState::Selected => Some(Color::RGB(80, 100, 150)),
+		_ => None,
+	}
+}
+
+fn render_path<'r>(
+    sdl: &mut SdlWrapper,
+    texture_creator: &'r TextureCreator<WindowContext>,
+    textures: &mut TextureMap<'r>,
+    game: &game::Game,
+	app: &game::Application,
+) {
+	// Draw pathfinder tiles
+	if let Some(result) = &game.player.path {
+		sdl.canvas.set_draw_color(Color::RGB(50, 180, 70));
+		for (x, y) in result.nodes().iter() {
+			let dst = tile_rect(*x, *y, 16, 16, app.upscale);
+			sdl.canvas.draw_rect(dst.into()).unwrap();
 		}
 	}
+}
 
-	sdl.canvas.copy_ex(texture, rect, dst, 0.0, None, false, false).unwrap();
+impl From<&Player> for RenderSprite {
+	fn from(player: &Player) -> Self {
+		RenderSprite::new(player.position, player.offset, Sprite::Player)
+	}
 }
