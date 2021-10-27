@@ -4,7 +4,7 @@ use super::generate_movement;
 
 
 pub fn update_mouse_state(game: &mut game::Game, input: &InputSystem) {
-	let player_rect = get_actor_rect(&game.player.position);
+	let player_rect = get_actor_rect(game.player.position.game_position());
 	let mouse_pos = input.mouse.position();
 	let contains = player_rect.contains(&mouse_pos);
 	let mouse_state = input.mouse.get(MouseButton::Left);
@@ -13,12 +13,13 @@ pub fn update_mouse_state(game: &mut game::Game, input: &InputSystem) {
 		(true, ButtonState::Released)	=> player_clicked(game),
 		(true, _)                    	=> player_hover(game),
 		(false, _)						=> player_idle(game),
-		_ => (),
 	}
 }
 
 fn player_idle(game: &mut game::Game) {
-	game.player.mouse_state = MouseState::Idle;
+	if game.player.mouse_state != MouseState::Selected {
+		game.player.mouse_state = MouseState::Idle;
+	}
 }
 
 fn player_clicked(game: &mut game::Game) {

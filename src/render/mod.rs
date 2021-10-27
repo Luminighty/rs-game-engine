@@ -10,14 +10,17 @@ pub use sdl_wrapper::SdlWrapper;
 pub use sprite::{Sprite, SpriteData, Sprites};
 pub use texture_map::TextureMap;
 
+use crate::UNIT;
 use crate::game;
 use crate::input;
 use crate::utils::Rect;
+use crate::utils::Vector2;
 use sdl2::pixels::Color;
 
 mod actors;
 mod map;
 mod renderable;
+mod nodes;
 
 pub fn render<'r>(
     sdl: &mut SdlWrapper,
@@ -30,25 +33,40 @@ pub fn render<'r>(
     sdl.canvas.set_draw_color(Color::RGB(255, 255, 255));
     sdl.canvas.clear();
 
-    map::render_map(sdl, texture_creator, textures, game, app);
-	actors::render_actors(sdl, texture_creator, textures, game, app);
+    map::render(sdl, texture_creator, textures, game, app);
+	actors::render(sdl, texture_creator, textures, game, app);
+    nodes::render(sdl, texture_creator, textures, game, app);
 
     sdl.canvas.present();
 }
 
-pub const DEFAULT_UNIT: u32 = 16;
 
-pub fn unit_tile_rect(x: i32, y: i32, upscale: u32) -> Rect {
-    tile_rect(x, y, DEFAULT_UNIT, DEFAULT_UNIT, upscale)
+pub fn unit_tile_rect<Vec2>(position: Vec2, upscale: u32) -> Rect 
+where
+    Vec2: Into<Vector2>
+{
+    tile_rect(position, (UNIT as i32, UNIT as i32), upscale)
 }
 
-pub fn tile_rect(x: i32, y: i32, width: u32, height: u32, upscale: u32) -> Rect {
-    tile_rect_offset(x, y, 0, 0, width, height, upscale)
+pub fn tile_rect<Vec2I, Vec2U>(position: Vec2I, size: Vec2U, upscale: u32) -> Rect 
+where 
+    Vec2I: Into<Vector2>,
+    Vec2U: Into<Vector2>,
+{
+    tile_rect_offset(position, (0, 0), size, upscale)
 }
 
-pub fn tile_rect_offset(x: i32, y: i32, offset_x: i32, offset_y: i32, width: u32, height: u32, upscale: u32) -> Rect {
-	Rect::new()
-		.offset(x * width as i32 + offset_x, y * height as i32 + offset_y)
-		.size(width, height)
+pub fn tile_rect_offset<Vec2IA, Vec2IB, Vec2U>(position: Vec2IA, offset: Vec2IB, size: Vec2U, upscale: u32) -> Rect
+    where 
+        Vec2IA: Into<Vector2>,
+        Vec2IB: Into<Vector2>,
+        Vec2U: Into<Vector2>,
+    {
+	let pos = position.into();
+	let offset = offset.into();
+	let size = size.into();
+    Rect::new()
+		.offset(pos.x * size.x + offset.x, pos.y * size.y + offset.y)
+		.size(size.x as u32, size.y as u32)
 		.scalar(upscale as i32)
 }

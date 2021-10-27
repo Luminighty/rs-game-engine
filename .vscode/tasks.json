@@ -8,6 +8,28 @@
 				"$rustc"
 			],
 			"label": "rust: cargo run"
+		},
+		{
+			"type": "cargo",
+			"command": "test",
+			"problemMatcher": [
+				"$rustc"
+			],
+			"args": [
+				"--doc",
+			],
+			"label": "rust: cargo doc test"
+		},
+		{
+			"type": "cargo",
+			"command": "doc",
+			"label": "rust: cargo doc",
+			"args": [
+				"--open",
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
 		}
 	]
 }

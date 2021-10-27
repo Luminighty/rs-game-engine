@@ -2,6 +2,7 @@ pub struct Application {
 	pub is_running: bool,
 	pub frame: usize,
 	pub upscale: u32,
+	pub fullscreen: bool,
 }
 
 impl Application {
@@ -10,6 +11,7 @@ impl Application {
 			is_running: true,
 			frame: 0,
 			upscale: 2,
+			fullscreen: false,
 		}
 	}
 

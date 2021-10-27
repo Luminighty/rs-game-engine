@@ -5,6 +5,7 @@ pub struct PrQueue<'a, T> {
 	queue_type: PrQueueType,
 }
 
+
 enum PrQueueType {
 	/// The min element will always be on top
 	/// When adding an element, it will always be the above the same values
@@ -20,6 +21,7 @@ enum PrQueueType {
 	MaxEqQueue,
 }
 
+
 impl<'a, T> PrQueue<'a, T> {
 
 	fn new(value_function: &'a dyn Fn(&T) -> usize, queue_type: PrQueueType) -> Self {
@@ -31,26 +33,108 @@ impl<'a, T> PrQueue<'a, T> {
 		}
 	}
 
+
+
 	/// The max element will always be on top
 	/// When adding an element, it will always be the above the same values
+	/// ## Test
+	/// ```
+	/// # #[derive(PartialEq, Debug)]
+	/// struct Person<'a>(&'a str, usize);
+	/// fn age(person: &Person) -> usize {
+	/// 	person.1
+	/// }
+	/// 
+	/// let mut queue = PrQueue::max(&age);
+	/// queue.add(Person("John", 10));
+	/// queue.add(Person("Adam", 10));
+	/// queue.add(Person("Sam", 4));
+	/// queue.add(Person("Alva", 12));
+	/// // Adam is first, because he was added last
+	/// assert_eq!(queue.pop(), Some(Person("Alva", 12)));
+	/// assert_eq!(queue.pop(), Some(Person("Adam", 10))); 
+	/// assert_eq!(queue.pop(), Some(Person("John", 10)));
+	/// assert_eq!(queue.pop(), Some(Person("Sam", 4)));
+	/// assert_eq!(queue.pop(), None);
+	/// ```
 	pub fn max(value_function: &'a dyn Fn(&T) -> usize) -> Self {
 		Self::new(value_function, PrQueueType::MaxQueue)
 	}
 
 	/// The max element will always be on top
 	/// When adding an element, it will always be the below the same values
+	/// ## Test
+	/// ```
+	/// # #[derive(PartialEq, Debug)]
+	/// struct Person<'a>(&'a str, usize);
+	/// fn age(person: &Person) -> usize {
+	/// 	person.1
+	/// }
+	/// 
+	/// let mut queue = PrQueue::max(&age);
+	/// queue.add(Person("John", 10));
+	/// queue.add(Person("Adam", 10));
+	/// queue.add(Person("Sam", 4));
+	/// queue.add(Person("Alva", 12));
+	/// // John is first, because he was added first
+	/// assert_eq!(queue.pop(), Some(Person("Alva", 12)));
+	/// assert_eq!(queue.pop(), Some(Person("John", 10)));
+	/// assert_eq!(queue.pop(), Some(Person("Adam", 10))); 
+	/// assert_eq!(queue.pop(), Some(Person("Sam", 4)));
+	/// assert_eq!(queue.pop(), None);
+	/// ```
 	pub fn max_eq(value_function: &'a dyn Fn(&T) -> usize) -> Self {
 		Self::new(value_function, PrQueueType::MaxEqQueue)
 	}
 
 	/// The min element will always be on top
 	/// When adding an element, it will always be the above the same values
+	/// ## Test
+	/// ```
+	/// # #[derive(PartialEq, Debug)]
+	/// struct Person<'a>(&'a str, usize);
+	/// fn age(person: &Person) -> usize {
+	/// 	person.1
+	/// }
+	/// 
+	/// let mut queue = PrQueue::max(&age);
+	/// queue.add(Person("John", 10));
+	/// queue.add(Person("Adam", 10));
+	/// queue.add(Person("Sam", 4));
+	/// queue.add(Person("Alva", 12));
+	/// // Adam is first, because he was added last
+	/// assert_eq!(queue.pop(), Some(Person("Sam", 4)));
+	/// assert_eq!(queue.pop(), Some(Person("Adam", 10))); 
+	/// assert_eq!(queue.pop(), Some(Person("John", 10)));
+	/// assert_eq!(queue.pop(), Some(Person("Alva", 12)));
+	/// assert_eq!(queue.pop(), None);
+	/// ```
 	pub fn min(value_function: &'a dyn Fn(&T) -> usize) -> Self {
 		Self::new(value_function, PrQueueType::MinQueue)
 	}
 
 	/// The min element will always be on top
 	/// When adding an element, it will always be the below the same values
+	/// ## Test
+	/// ```
+	/// # #[derive(PartialEq, Debug)]
+	/// struct Person<'a>(&'a str, usize);
+	/// fn age(person: &Person) -> usize {
+	/// 	person.1
+	/// }
+	/// 
+	/// let mut queue = PrQueue::max(&age);
+	/// queue.add(Person("John", 10));
+	/// queue.add(Person("Adam", 10));
+	/// queue.add(Person("Sam", 4));
+	/// queue.add(Person("Alva", 12));
+	/// // John is first, because he was added first
+	/// assert_eq!(queue.pop(), Some(Person("Sam", 4)));
+	/// assert_eq!(queue.pop(), Some(Person("John", 10)));
+	/// assert_eq!(queue.pop(), Some(Person("Adam", 10))); 
+	/// assert_eq!(queue.pop(), Some(Person("Alva", 12)));
+	/// assert_eq!(queue.pop(), None);
+	/// ```
 	pub fn min_eq(value_function: &'a dyn Fn(&T) -> usize) -> Self {
 		Self::new(value_function, PrQueueType::MinEqQueue)
 	}
@@ -130,6 +214,11 @@ mod test {
 	}
 
 	fn usize_identity(a: &usize) -> usize { *a }
+
+	#[test]
+	pub fn doc_test() {
+
+	}
 
 	#[test]
 	pub fn basic_max() {
