@@ -49,6 +49,11 @@ impl Map {
 		self
 	}
 
+	pub fn decoration(mut self, position: Vector2, tile: Tile) -> Self {
+		self.set_tile(position.x, position.y, tile);
+		self
+	}
+
 	pub fn get_size(&self) -> Vector2 {
 		Vector2::new(self.width as i32, self.height as i32)
 	}
@@ -73,6 +78,17 @@ impl Map {
 		Self::new(13, 12)
 			.square(Rect::new().offset(2, 2).size(5, 4), Tile::Ground)
 			.square(Rect::new().offset(2, 6).size(9, 5), Tile::Ground)
+			.decoration(Vector2::new(5, 7), Tile::Tile(0))
+			.decoration(Vector2::new(4, 7), Tile::Tile(1))
+			.decoration(Vector2::new(4, 6), Tile::Tile(2))
+			.decoration(Vector2::new(8, 7), Tile::Flower(0))
+			.decoration(Vector2::new(9, 7), Tile::Flower(1))
+			.decoration(Vector2::new(9, 9), Tile::Grass(0))
+			.decoration(Vector2::new(9, 8), Tile::Grass(1))
+			.decoration(Vector2::new(8, 8), Tile::Grass(2))
+			.decoration(Vector2::new(4, 4), Tile::Grass(2))
+			.decoration(Vector2::new(3, 4), Tile::Grass(0))
+			.decoration(Vector2::new(5, 4), Tile::Flower(0))
 			.wall(Vector2::new(3, 3), 0)
 			.wall(Vector2::new(5, 3), 0)
 			.wall(Vector2::new(3, 5), 1)

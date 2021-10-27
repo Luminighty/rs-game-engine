@@ -11,11 +11,12 @@ pub struct RenderRect {
     _width: Option<u32>,
 }
 
+#[allow(dead_code)]
 impl RenderRect {
-    pub fn new(position: Vector2, color: Color) -> Self {
+    pub fn new<Vec2: Into<Vector2>>(position: Vec2, color: Color) -> Self {
         Self {
             color,
-            position,
+            position: position.into(),
             _size: None,
             _width: None,
         }
@@ -48,10 +49,10 @@ impl Renderable for RenderRect {
         _textures: &mut TextureMap<'r>,
         app: &game::Application,
     ) {
-        let Vector2 { x, y } = self.position;
+        let pos = self.position;
         let size = self._size.unwrap_or((16, 16).into());
 
-        let rect = tile_rect(x, y, size.x as u32, size.y as u32, app.upscale);
+        let rect = tile_rect(pos, size, app.upscale);
 		let width = self._width.unwrap_or(app.upscale);
 
         sdl.canvas.set_draw_color(self.color);

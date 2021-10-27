@@ -2,7 +2,7 @@ use sdl2::{render::TextureCreator, video::WindowContext};
 use crate::{game::{self, map::Tile}, render::Sprite};
 use super::{SdlWrapper, TextureMap, renderable::{RenderSprite, Renderable}};
 
-pub fn render_map<'r>(
+pub fn render<'r>(
     sdl: &mut SdlWrapper,
     texture_creator: &'r TextureCreator<WindowContext>,
     textures: &mut TextureMap<'r>,
@@ -15,7 +15,7 @@ pub fn render_map<'r>(
     for index in 0..map.len() {
         if let Some((x, y)) = get_sheet(map.get_index(index)) {
             let position = (index as i32 % width, index as i32 / width);
-            let sprite = RenderSprite::new(position, (0, 0), Sprite::Ground).sheet((x as i32, y as i32));
+            let sprite = RenderSprite::new(position, Sprite::Ground).sheet((x as i32, y as i32));
 
             sprite.render(sdl, texture_creator, textures, app);
         }
@@ -24,7 +24,7 @@ pub fn render_map<'r>(
 	for (position, wall) in &map.walls {
 		let frame = (app.frame / game.animation_step % 2) as i32;
         let position = *position;
-        let sprite = RenderSprite::new(position, (0, 0), Sprite::Wall).sheet((*wall as i32, frame));
+        let sprite = RenderSprite::new(position, Sprite::Wall).sheet((*wall as i32, frame));
         sprite.render(sdl, texture_creator, textures, app);
 	}
 }

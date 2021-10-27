@@ -1,17 +1,17 @@
 use sdl2::{render::TextureCreator, video::WindowContext};
 use crate::game;
-use super::{SdlWrapper, TextureMap, tile_rect};
+use super::{SdlWrapper, TextureMap};
 
 mod enemies;
 mod player;
 
-pub fn render_actors<'r>(
+pub fn render<'r>(
     sdl: &mut SdlWrapper,
     texture_creator: &'r TextureCreator<WindowContext>,
     textures: &mut TextureMap<'r>,
     game: &game::Game,
 	app: &game::Application,
 ) {
-	player::render_player(sdl, texture_creator, textures, game, app);
-	enemies::render_enemies(sdl, texture_creator, textures, game, app);
+	player::render(sdl, texture_creator, textures, game, app);
+	enemies::render(sdl, texture_creator, textures, game, app);
 }
