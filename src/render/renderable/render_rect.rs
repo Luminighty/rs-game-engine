@@ -52,8 +52,8 @@ impl Renderable for RenderRect {
         let pos = self.position;
         let size = self._size.unwrap_or((16, 16).into());
 
-        let rect = tile_rect(pos, size, app.upscale);
-		let width = self._width.unwrap_or(app.upscale);
+        let rect = tile_rect(pos, size, sdl.meta.upscale);
+		let width = self._width.unwrap_or(sdl.meta.upscale);
 
         sdl.canvas.set_draw_color(self.color);
         sdl.canvas.draw_rect(rect.into()).unwrap();

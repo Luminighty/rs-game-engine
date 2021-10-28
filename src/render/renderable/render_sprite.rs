@@ -72,7 +72,7 @@ impl Renderable for RenderSprite {
 
         let (texture, src) =
             textures.get_sheet(sprite, sheet.x as u8, sheet.y as u8, texture_creator);
-        let dst = tile_rect_offset(position, offset, (src.width, src.height), app.upscale);
+        let dst = tile_rect_offset(position, offset, (src.width, src.height), sdl.meta.upscale);
         sdl.canvas
             .copy_ex(
                 texture,

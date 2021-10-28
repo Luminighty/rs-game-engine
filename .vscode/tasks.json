@@ -16,7 +16,7 @@
 				"$rustc"
 			],
 			"args": [
-				"--doc",
+				"--doc"
 			],
 			"label": "rust: cargo doc test"
 		},
@@ -25,11 +25,16 @@
 			"command": "doc",
 			"label": "rust: cargo doc",
 			"args": [
-				"--open",
+				"--open"
 			],
 			"problemMatcher": [
 				"$rustc"
-			],
+			]
+		},
+		{
+			"type": "process",
+			"command": "",
+			"label": "build: release",
 		}
 	]
 }

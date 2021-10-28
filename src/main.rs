@@ -1,3 +1,5 @@
+#![windows_subsystem = "windows"]
+
 extern crate sdl2;
 
 pub const UNIT: i32 = 16;
@@ -21,8 +23,6 @@ fn main() {
 
 	let texture_creator = sdlwrapper.texture_creator();
 	let mut textures = render::TextureMap::init();
-
-	log!("Help: {}:{}", file!(), line!());
 
 	log_success!("Game started");
 	loop {

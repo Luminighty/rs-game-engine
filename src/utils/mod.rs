@@ -4,6 +4,7 @@ mod prqueue;
 mod matrix;
 mod delayed_vec2;
 mod direction;
+mod events;
 
 pub mod clamp;
 pub mod debug;
@@ -15,3 +16,4 @@ pub use rect::Rect;
 pub use prqueue::PrQueue;
 pub use delayed_vec2::DelayedVector2;
 pub use direction::{Direction, DirectionMap};
+pub use events::EventSystem;
