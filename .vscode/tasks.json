@@ -33,7 +33,7 @@
 		},
 		{
 			"type": "process",
-			"command": "",
+			"command": "build.release.bat",
 			"label": "build: release",
 		}
 	]
