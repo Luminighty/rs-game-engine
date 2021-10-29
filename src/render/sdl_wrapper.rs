@@ -24,7 +24,7 @@ impl RendererMetaData {
 		Self {
 			upscale: 1,
 			viewport: None,
-			clear_color: Color::RGB(2, 1, 13),
+			clear_color: Color::RGB(0, 0, 0),
 			windowed_size: config.window_size,
 		}
 	}

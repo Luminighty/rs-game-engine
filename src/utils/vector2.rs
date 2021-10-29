@@ -107,6 +107,17 @@ impl Vector2 {
 		
 		vec
 	}
+
+	pub fn abs(&self) -> Self {
+		Self {
+			x: self.x.abs(),
+			y: self.y.abs(),
+		}
+	}
+
+	pub fn delta(&self, other: &Vector2) -> Self {
+		(*self - *other).abs()
+	}
 }
 
 impl Sub<Vector2> for Vector2 {

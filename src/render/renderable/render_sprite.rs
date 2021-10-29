@@ -60,7 +60,7 @@ impl Renderable for RenderSprite {
         sdl: &mut SdlWrapper,
         texture_creator: &'r TextureCreator<WindowContext>,
         textures: &mut TextureMap<'r>,
-        app: &game::Application,
+        _app: &game::Application,
     ) {
         let position = self.position;
         let offset = self._offset;

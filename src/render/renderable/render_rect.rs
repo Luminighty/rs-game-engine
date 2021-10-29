@@ -47,7 +47,7 @@ impl Renderable for RenderRect {
         sdl: &mut SdlWrapper,
         _texture_creator: &'r TextureCreator<WindowContext>,
         _textures: &mut TextureMap<'r>,
-        app: &game::Application,
+        _app: &game::Application,
     ) {
         let pos = self.position;
         let size = self._size.unwrap_or((16, 16).into());

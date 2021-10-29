@@ -1,16 +1,15 @@
 use crate::{game::map::Map, utils::{Matrix, Vector2, pathfinder::{Path, PathfinderResult}}};
 
-use super::{actor::{Enemy, Player}, map::Tile};
+use super::{actor::{Enemy, Player}, map::Tile, nodes::Nodes};
 
 pub struct Game {
 	pub map: Map,
 	pub player: Player,
 	pub enemies: Vec<Enemy>,
 
-	pub animation_step: usize,
+	pub framerate: usize,
 
-	pub pathfinder: Option<PathfinderResult>,
-	pub path: Option<Path>,
+	pub nodes: Nodes,
 }
 
 
@@ -41,7 +40,7 @@ impl Game {
 impl Game {
 	pub fn new() -> Self {
 		Self {
-			animation_step: 30,
+			framerate: 30,
 			map: Map::example_map(),
 			player: Player::new(Vector2::new(5, 6)),
 			enemies: vec![
@@ -49,8 +48,7 @@ impl Game {
 				Enemy::bat(Vector2::new(3, 8)),
 				Enemy::wisp(Vector2::new(4, 3)),
 			],
-			pathfinder: None,
-			path: None,
+			nodes: Nodes::new(),
 		}
 	}
 }

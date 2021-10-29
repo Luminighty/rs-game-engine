@@ -14,3 +14,4 @@ xcopy res target\dist\res /E /Y
 
 rcedit %OUTPUT_FOLDER%\%EXE_NAME%.exe --set-icon %OUTPUT_FOLDER%\res\icon.ico
 echo Release dist created.
+%SystemRoot%\explorer.exe %OUTPUT_FOLDER%

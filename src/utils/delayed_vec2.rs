@@ -50,10 +50,3 @@ impl DelayedVector2 {
 		return self.targets.len() != 0
 	}
 }
-
-#[cfg(test)]
-mod test {
-    use crate::utils::Vector2;
-    use super::DelayedVector2;
-
-}

@@ -17,5 +17,5 @@ fn generate_movement(game: &mut game::Game) {
 	let walls = game.occupied_tiles();
 	let result = pathfinder::pathfinder(player.position.game_position(), &walls, player.speed as usize);
 
-	game.pathfinder = Some(result);
+	game.nodes.pathfinder = Some(result);
 }

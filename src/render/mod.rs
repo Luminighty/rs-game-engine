@@ -17,7 +17,7 @@ use crate::game::AppEvent;
 use crate::input;
 use crate::utils::Rect;
 use crate::utils::Vector2;
-use sdl2::pixels::Color;
+
 
 mod actors;
 mod map;
@@ -101,4 +101,8 @@ pub fn app_events(sdl: &mut SdlWrapper, app: &game::Application) {
             // _ => (),
         }
     }
+}
+
+pub fn animation_frame(frame: usize, framerate: usize, speed: usize) -> i32 {
+    (frame / (framerate / speed)) as i32
 }

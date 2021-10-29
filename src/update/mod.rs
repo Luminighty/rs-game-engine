@@ -47,7 +47,7 @@ pub fn key_up(app: &mut game::Application, keycode: sdl2::keyboard::Keycode) {
 }
 
 pub fn resize(app: &mut game::Application, width: i32, height: i32) {
-	const TARGET: (i32, i32) = (13 * 16, 12 * 16);
+	const TARGET: (i32, i32) = (14 * 16, 13 * 16);
 
 	let upscale = (
 		width / TARGET.0,

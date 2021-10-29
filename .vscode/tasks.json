@@ -35,6 +35,7 @@
 			"type": "process",
 			"command": "build.release.bat",
 			"label": "build: release",
+			"problemMatcher": []
 		}
 	]
 }

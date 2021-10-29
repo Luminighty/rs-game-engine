@@ -1,5 +1,5 @@
-use sdl2::{pixels::Color, render::TextureCreator, video::WindowContext};
-use crate::{game::{self, actor::{MouseState, Player}}, render::{Sprite, renderable::RenderSprite, renderable::{RenderRect, Renderable}}, utils::Vector2};
+use sdl2::{render::TextureCreator, video::WindowContext};
+use crate::{game::{self, actor::{MouseState, Player}}, render::{Sprite, animation_frame, renderable::RenderSprite, renderable::{Renderable}}, utils::Vector2};
 use super::{SdlWrapper, TextureMap};
 
 pub fn render<'r>(
@@ -9,10 +9,14 @@ pub fn render<'r>(
     game: &game::Game,
 	app: &game::Application,
 ) {
-	let frame = (app.frame / (game.animation_step / 2) % 4) as u8;
+	let frame = if game.player.position.has_target() {
+		animation_frame(app.frame, game.framerate, 4)
+	} else {
+		animation_frame(app.frame, game.framerate, 2)
+	};
 
 	let player = RenderSprite::from(&game.player)
-										.sheet((frame as i32, 0));
+										.sheet((frame % 4, 0));
 	player.render(sdl, texture_creator, textures, app);
 
 	let pos = &game.player.position.game_position();
@@ -22,6 +26,7 @@ pub fn render<'r>(
 
 	//render_path(sdl, texture_creator, textures, game, app);
 }
+
 
 fn player_outline(position: Vector2, state: &MouseState) -> Option<RenderSprite> {
 	match state {
