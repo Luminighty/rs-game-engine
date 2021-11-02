@@ -1,6 +1,8 @@
-use crate::{game::map::Map, utils::{Matrix, Vector2, pathfinder::{Path, PathfinderResult}}};
+use crate::{game::map::Map, utils::{Matrix, Vector2}};
 
-use super::{actor::{Enemy, Player}, map::Tile, nodes::Nodes};
+use super::{actor::{Enemy, Player}, debug::console::Console, map::Tile, nodes::Nodes};
+
+const CONSOLE_ENABLED: bool = true;
 
 pub struct Game {
 	pub map: Map,
@@ -10,6 +12,8 @@ pub struct Game {
 	pub framerate: usize,
 
 	pub nodes: Nodes,
+
+	pub console: Console,
 }
 
 
@@ -49,6 +53,7 @@ impl Game {
 				Enemy::wisp(Vector2::new(4, 3)),
 			],
 			nodes: Nodes::new(),
+			console: Console::new(CONSOLE_ENABLED),
 		}
 	}
 }

@@ -9,6 +9,7 @@ pub enum Sprite {
 	Ground,
 	Wall,
 	Interact,
+	Font,
 }
 
 pub struct Sprites {
@@ -17,6 +18,7 @@ pub struct Sprites {
 	ground: SpriteData,
 	wall: SpriteData,
 	interact: SpriteData,
+	font: SpriteData,
 }
 
 impl Sprites {
@@ -28,6 +30,7 @@ impl Sprites {
 			ground:   SpriteData::sheet("res/map/ground.png",   actor_rect),
 			wall:     SpriteData::sheet("res/map/wall.png",     actor_rect),
 			interact: SpriteData::sheet("res/ui/interact.png",  actor_rect),
+			font:     SpriteData::sheet("res/misc/font.png", Rect::new().size(3, 5).offset(1, 1)).padding(Vector2::new(1, 0)),
 		}
 	}
 
@@ -38,6 +41,7 @@ impl Sprites {
 			&mut self.ground, 
 			&mut self.wall,
 			&mut self.interact,
+			&mut self.font,
 		]
 	}
 
@@ -48,6 +52,7 @@ impl Sprites {
 			&self.ground, 
 			&self.wall,
 			&self.interact,
+			&self.font,
 		]
 	}
 }

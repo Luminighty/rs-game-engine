@@ -6,9 +6,11 @@ use super::{SdlWrapper, Sprite, TextureMap, tile_rect_offset};
 
 mod render_rect;
 mod render_sprite;
+mod render_text;
 
 pub use render_rect::RenderRect;
 pub use render_sprite::RenderSprite;
+pub use render_text::RenderText;
 
 pub trait Renderable {
 	fn render<'r>(&self, sdl: &mut SdlWrapper,

@@ -1,3 +1,5 @@
+
+
 use sdl2::{event::{Event, WindowEvent}, video::FullscreenType};
 
 use crate::{UNIT, game::{self, AppEvent}, input::{InputSystem}, utils::{self, Rect, Vector2}};
@@ -29,19 +31,28 @@ pub fn sdl_events(app: &mut game::Application, game: &mut game::Game, input: &In
 				WindowEvent::SizeChanged(w, h) => resize(app, *w, *h),
 				_ => (),
 			}
-			Event::KeyUp {keycode, ..} => if let Some(keycode) = keycode {
-				key_up(app, *keycode);
+			Event::KeyUp {keycode, scancode, ..} =>  {
+				if let Some(keycode) = keycode {
+					debug::console::console(*keycode, game);
+					key_up(app, game, *keycode);
+				}
 			}
 			_ => (),
 		}
 	}
 }
 
-pub fn key_up(app: &mut game::Application, keycode: sdl2::keyboard::Keycode) {
+
+
+pub fn key_up(app: &mut game::Application, game: &mut game::Game, keycode: sdl2::keyboard::Keycode) {
 	use sdl2::keyboard::Keycode;
 	match keycode {
 		Keycode::F1 => app.push_event(AppEvent::SetFullscreen(FullscreenType::True)),
 		Keycode::F2 => app.push_event(AppEvent::SetFullscreen(FullscreenType::Off)),
+		Keycode::F12 => if game.console.enabled { 
+			game.console.shown = !game.console.shown;
+			crate::log!("Console shown: {}", game.console.shown);
+		},
 		_ => (),
 	}
 }

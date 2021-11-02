@@ -1,3 +1,4 @@
+
 pub struct Matrix<T> {
 	data: Vec<T>,
 	width: usize,
@@ -26,19 +27,20 @@ impl<T> Matrix<T> {
 	fn index(&self, col: usize, row: usize) -> usize {
 		row * self.width + col
 	}
+
 }
 
 impl<T> std::ops::Index<[usize; 2]> for Matrix<T> {
-    type Output = T;
-    fn index<'a>(&'a self, [col, row]: [usize; 2]) -> &'a T {
+	type Output = T;
+	fn index<'a>(&'a self, [col, row]: [usize; 2]) -> &'a T {
 		let index = self.index(col, row);
-        &self.data[index]
-    }
+		&self.data[index]
+	}
 }
 
 impl<T> std::ops::IndexMut<[usize; 2]> for Matrix<T> {
-    fn index_mut<'a>(&'a mut self, [col, row]: [usize; 2]) -> &'a mut T {
+	fn index_mut<'a>(&'a mut self, [col, row]: [usize; 2]) -> &'a mut T {
 		let index = self.index(col, row);
-        &mut self.data[index]
-    }
+		&mut self.data[index]
+	}
 }

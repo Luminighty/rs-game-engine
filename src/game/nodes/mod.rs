@@ -1,4 +1,4 @@
-use crate::utils::pathfinder::{Path, PathfinderResult};
+use crate::utils::{Vector2, pathfinder::{Path, PathfinderResult}};
 
 use self::attack::AttackNodes;
 
@@ -6,7 +6,7 @@ pub mod attack;
 
 pub struct Nodes {
 	pub attack: Option<AttackNodes>,
-	pub attack_hover: Option<(i32, i32)>,
+	pub attack_hover: Option<Vector2>,
 	pub pathfinder: Option<PathfinderResult>,
 	pub path: Option<Path>,
 }

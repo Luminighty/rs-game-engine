@@ -6,6 +6,7 @@ mod delayed_vec2;
 mod direction;
 mod events;
 
+pub mod nd_iter;
 pub mod clamp;
 pub mod debug;
 pub mod pathfinder;

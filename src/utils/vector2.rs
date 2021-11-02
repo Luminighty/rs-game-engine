@@ -188,6 +188,14 @@ impl From<(u32, u32)> for Vector2 {
 	}
 }
 
+
+impl From<&Vector2> for Vector2 {
+	fn from(v: &Vector2) -> Self {
+		Self::new(v.x, v.y)
+	}
+}
+
+
 #[cfg(test)]
 mod test {
 

@@ -2,7 +2,7 @@ use crate::utils::{Vector2, clamp::Clamped};
 
 pub mod kind;
 
-use kind::Kind;
+pub use kind::Kind;
 
 pub struct Enemy {
 	pub position: Vector2,

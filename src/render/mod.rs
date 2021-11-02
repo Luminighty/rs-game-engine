@@ -23,6 +23,7 @@ mod actors;
 mod map;
 mod renderable;
 mod nodes;
+mod debug;
 
 pub fn render<'r>(
     sdl: &mut SdlWrapper,
@@ -39,6 +40,7 @@ pub fn render<'r>(
     map::render(sdl, texture_creator, textures, game, app);
 	actors::render(sdl, texture_creator, textures, game, app);
     nodes::render(sdl, texture_creator, textures, game, app);
+    debug::render(sdl, texture_creator, textures, game, app);
 
     sdl.canvas.present();
 }

@@ -1,5 +1,5 @@
 mod player;
-mod enemy;
+pub mod enemy;
 mod mouse_state;
 
 pub use player::Player;

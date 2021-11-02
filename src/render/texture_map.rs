@@ -20,7 +20,7 @@ impl<'r> TextureMap<'r> {
         &mut self,
         sprite: render::Sprite,
         texture_creator: &'r sdl2::render::TextureCreator<sdl2::video::WindowContext>,
-    ) -> &sdl2::render::Texture<'r> {
+    ) -> &mut sdl2::render::Texture<'r> {
         let fields = self.sprites.fields();
         let data = &fields[sprite as usize];
         if !self.map.contains_key(&data.path) {
@@ -29,7 +29,7 @@ impl<'r> TextureMap<'r> {
                 texture_creator.load_texture(&data.path).unwrap(),
             );
         }
-        self.map.get(&data.path).unwrap()
+        self.map.get_mut(&data.path).unwrap()
     }
 
     pub fn get_sheet(
@@ -38,7 +38,7 @@ impl<'r> TextureMap<'r> {
         x: u8,
         y: u8,
         texture_creator: &'r sdl2::render::TextureCreator<sdl2::video::WindowContext>,
-    ) -> (&sdl2::render::Texture<'r>, crate::utils::Rect) {
+    ) -> (&mut sdl2::render::Texture<'r>, crate::utils::Rect) {
 		let rect = self.sprites.fields()[sheet as usize].get_rect(x, y);
         (
 			self.get(sheet, texture_creator),
